@@ -1,0 +1,20 @@
+project:
+  name: surface-scan-mlops
+  random_seed: 42
+
+data:
+  image_size: [224, 224]
+  batch_size: 32
+  num_classes: 6
+
+training:
+  epochs: 25
+  learning_rate: 0.001
+  dropout: 0.3
+  early_stopping_patience: 5
+
+model:
+  baseline: custom_cnn
+  transfer_models:
+    - MobileNetV3Small
+    - EfficientNetB0
