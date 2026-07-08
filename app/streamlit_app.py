@@ -12,9 +12,10 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from src.gradcam import generate_gradcam  # noqa: E402
 from src.predict import (  # noqa: E402
-    DEFAULT_MODEL_PATH,
     CLASS_NAMES,
+    DEFAULT_MODEL_PATH,
     load_model,
     predict_image,
 )
@@ -37,8 +38,8 @@ def main() -> None:
     st.subheader("Industrial Steel Surface Defect Classification")
 
     st.write(
-        "Upload a steel surface image and the champion EfficientNetB0 model "
-        "will classify the defect type."
+        "Upload a steel surface image. The champion EfficientNetB0 model "
+        "will classify the defect type and generate a Grad-CAM explanation."
     )
 
     if not DEFAULT_MODEL_PATH.exists():
@@ -59,11 +60,6 @@ def main() -> None:
 
     image = Image.open(uploaded_file)
 
-    col1, col2 = st.columns([1, 1])
-
-    with col1:
-        st.image(image, caption="Uploaded image", use_container_width=True)
-
     model = get_model()
 
     with st.spinner("Running inference..."):
@@ -76,26 +72,57 @@ def main() -> None:
         }
     ).sort_values("probability", ascending=False)
 
-    with col2:
-        st.metric("Predicted defect", result.predicted_class)
-        st.metric("Confidence", f"{result.confidence * 100:.2f}%")
+    predicted_index = CLASS_NAMES.index(result.predicted_class)
 
-        st.write("Class probabilities")
-        st.dataframe(
-            probabilities_df,
-            use_container_width=True,
-            hide_index=True,
+    with st.spinner("Generating Grad-CAM explanation..."):
+        gradcam_overlay, _, _ = generate_gradcam(
+            image=image,
+            model=model,
+            class_index=predicted_index,
         )
 
-        st.bar_chart(
-            probabilities_df.set_index("class"),
-            y="probability",
+    col1, col2 = st.columns([1, 1])
+
+    with col1:
+        st.image(
+            image,
+            caption="Uploaded image",
+            use_container_width=True,
+        )
+
+    with col2:
+        st.image(
+            gradcam_overlay,
+            caption="Grad-CAM explanation",
+            use_container_width=True,
         )
 
     st.divider()
 
-    st.write("Supported classes:")
+    metric_col1, metric_col2 = st.columns(2)
 
+    with metric_col1:
+        st.metric("Predicted defect", result.predicted_class)
+
+    with metric_col2:
+        st.metric("Confidence", f"{result.confidence * 100:.2f}%")
+
+    st.subheader("Class probabilities")
+
+    st.dataframe(
+        probabilities_df,
+        use_container_width=True,
+        hide_index=True,
+    )
+
+    st.bar_chart(
+        probabilities_df.set_index("class"),
+        y="probability",
+    )
+
+    st.divider()
+
+    st.subheader("Supported classes")
     st.code("\n".join(CLASS_NAMES))
 
 
