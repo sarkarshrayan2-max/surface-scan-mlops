@@ -1,0 +1,5 @@
+outs:
+- md5: fb62e3218d8bd42ab143df9c1b21699a
+  size: 17145282
+  hash: md5
+  path: efficientnetb0_frozen_best.keras

@@ -13,22 +13,21 @@ __pycache__/
 kaggle.json
 .streamlit/secrets.toml
 
-# Large datasets and generated data
-data/raw/
-data/interim/
-data/processed/
 
-# MLflow local data
-mlruns/
-mlartifacts/
+# Data
+data/raw/**
+data/processed/**
+
+# Keep interim split manifests trackable by DVC/Git
+!data/interim/
+!data/interim/**
+
+# MLflow
+mlruns/**
+mlartifacts/**
 mlflow.db
 
-# Generated artifacts and models
-artifacts/
-*.keras
-*.h5
-*.joblib
-
-# OS files
-.DS_Store
-Thumbs.db
+# Model artifacts tracked by DVC, not Git
+artifacts/**/*.keras
+artifacts/**/*.h5
+artifacts/**/*.joblib
