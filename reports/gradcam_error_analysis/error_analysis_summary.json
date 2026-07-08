@@ -1,0 +1,38 @@
+{
+  "model": "EfficientNetB0 frozen transfer-learning champion",
+  "test_images": 360,
+  "correct_predictions": 344,
+  "wrong_predictions": 16,
+  "test_accuracy": 0.9556,
+  "test_macro_f1": 0.955,
+  "main_error_patterns": [
+    {
+      "true_label": "inclusion",
+      "predicted_label": "scratches",
+      "count": 7
+    },
+    {
+      "true_label": "scratches",
+      "predicted_label": "rolled-in_scale",
+      "count": 3
+    },
+    {
+      "true_label": "scratches",
+      "predicted_label": "inclusion",
+      "count": 3
+    },
+    {
+      "true_label": "inclusion",
+      "predicted_label": "pitted_surface",
+      "count": 2
+    },
+    {
+      "true_label": "pitted_surface",
+      "predicted_label": "rolled-in_scale",
+      "count": 1
+    }
+  ],
+  "gradcam_layer": "top_conv",
+  "interpretation": "Most errors occurred between visually similar defect classes. Inclusion defects with long narrow line-like structures were often classified as scratches. Some scratch samples were confused with rolled-in scale when the model focused on broader textured regions instead of thin scratch boundaries.",
+  "limitation": "The model performs strongly overall, but remaining failures are concentrated in visually ambiguous texture patterns between inclusion, scratches, pitted surface, and rolled-in scale."
+}

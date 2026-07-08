@@ -1,0 +1,6 @@
+true_label,predicted_label,count
+inclusion,scratches,7
+scratches,rolled-in_scale,3
+scratches,inclusion,3
+inclusion,pitted_surface,2
+pitted_surface,rolled-in_scale,1

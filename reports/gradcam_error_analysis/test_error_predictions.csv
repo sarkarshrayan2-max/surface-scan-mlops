@@ -1,0 +1,17 @@
+image_path,true_label,predicted_label,confidence
+data/raw/NEU-DET/validation/images/inclusion/inclusion_246.jpg,inclusion,scratches,0.7713521122932434
+data/raw/NEU-DET/validation/images/inclusion/inclusion_252.jpg,inclusion,scratches,0.7335507869720459
+data/raw/NEU-DET/validation/images/inclusion/inclusion_248.jpg,inclusion,scratches,0.7041982412338257
+data/raw/NEU-DET/validation/images/scratches/scratches_290.jpg,scratches,rolled-in_scale,0.6497191190719604
+data/raw/NEU-DET/validation/images/scratches/scratches_283.jpg,scratches,inclusion,0.5839046835899353
+data/raw/NEU-DET/validation/images/inclusion/inclusion_254.jpg,inclusion,scratches,0.5538065433502197
+data/raw/NEU-DET/validation/images/inclusion/inclusion_247.jpg,inclusion,scratches,0.5449479222297668
+data/raw/NEU-DET/validation/images/scratches/scratches_266.jpg,scratches,rolled-in_scale,0.5268268585205078
+data/raw/NEU-DET/validation/images/inclusion/inclusion_253.jpg,inclusion,pitted_surface,0.4928218126296997
+data/raw/NEU-DET/validation/images/inclusion/inclusion_242.jpg,inclusion,pitted_surface,0.4920150637626648
+data/raw/NEU-DET/validation/images/pitted_surface/pitted_surface_273.jpg,pitted_surface,rolled-in_scale,0.4858390688896179
+data/raw/NEU-DET/validation/images/scratches/scratches_284.jpg,scratches,inclusion,0.4855574071407318
+data/raw/NEU-DET/validation/images/inclusion/inclusion_297.jpg,inclusion,scratches,0.3953811824321747
+data/raw/NEU-DET/validation/images/scratches/scratches_248.jpg,scratches,rolled-in_scale,0.3856220543384552
+data/raw/NEU-DET/validation/images/scratches/scratches_246.jpg,scratches,inclusion,0.3821415603160858
+data/raw/NEU-DET/validation/images/inclusion/inclusion_249.jpg,inclusion,scratches,0.3685685992240906
