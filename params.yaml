@@ -1,9 +1,9 @@
 train:
-  model_name: custom_cnn
+  model_name: efficientnetb0
   learning_rate: 0.001
-  epochs: 1
-  batch_size: 16
-  patience: 3
+  epochs: 10
+  batch_size: 32
+  patience: 5
   train_csv: data/interim/splits/train.csv
   validation_csv: data/interim/splits/validation.csv
   test_csv: data/interim/splits/test.csv
@@ -11,10 +11,10 @@ train:
   reports_dir: reports/training
   tracking_uri: sqlite:///mlflow.db
   experiment_name: surface-scan-training
-  run_name: custom-cnn-smoke-test
+  run_name: efficientnetb0-final-test
 
 evaluate_champion:
-  model_path: artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
+  model_path: artifacts/training/efficientnetb0-final-test_best.keras
   split_csv: data/interim/splits/test.csv
   split_name: test
   batch_size: 32

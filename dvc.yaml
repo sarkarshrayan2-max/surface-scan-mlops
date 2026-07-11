@@ -10,30 +10,6 @@ stages:
       - data/interim/splits/test.csv
       - artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
 
-  evaluate_champion:
-    cmd: >-
-      uv run python src/evaluate.py
-      --model-path ${evaluate_champion.model_path}
-      --split-csv ${evaluate_champion.split_csv}
-      --split-name ${evaluate_champion.split_name}
-      --batch-size ${evaluate_champion.batch_size}
-      --output-dir ${evaluate_champion.output_dir}
-    deps:
-      - src/evaluate.py
-      - src/preprocess.py
-      - data/raw/NEU-DET
-      - data/interim/splits/test.csv
-      - artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
-    params:
-      - evaluate_champion.model_path
-      - evaluate_champion.split_csv
-      - evaluate_champion.split_name
-      - evaluate_champion.batch_size
-      - evaluate_champion.output_dir
-    metrics:
-      - reports/evaluation/test_metrics.json:
-          cache: false
-
   train_model:
     cmd: >-
       uv run python src/train.py
@@ -75,4 +51,41 @@ stages:
     outs:
       - artifacts/training/${train.run_name}_best.keras
       - reports/training/${train.run_name}_history.csv:
+          cache: false
+      - artifacts/training/class_names.json:
+          cache: false
+
+  evaluate_champion:
+    cmd: >-
+      uv run python src/evaluate.py
+      --model-path ${evaluate_champion.model_path}
+      --split-csv ${evaluate_champion.split_csv}
+      --split-name ${evaluate_champion.split_name}
+      --batch-size ${evaluate_champion.batch_size}
+      --output-dir ${evaluate_champion.output_dir}
+    deps:
+      - src/evaluate.py
+      - src/preprocess.py
+      - data/raw/NEU-DET
+      - data/interim/splits/test.csv
+      - ${evaluate_champion.model_path}
+    params:
+      - evaluate_champion.model_path
+      - evaluate_champion.split_csv
+      - evaluate_champion.split_name
+      - evaluate_champion.batch_size
+      - evaluate_champion.output_dir
+    metrics:
+      - ${evaluate_champion.output_dir}/${evaluate_champion.split_name}_metrics.json:
+          cache: false
+    outs:
+      - ${evaluate_champion.output_dir}/${evaluate_champion.split_name}_predictions.csv:
+          cache: false
+      - ${evaluate_champion.output_dir}/${evaluate_champion.split_name}_classification_report.csv:
+          cache: false
+      - ${evaluate_champion.output_dir}/${evaluate_champion.split_name}_confusion_matrix.csv:
+          cache: false
+      - ${evaluate_champion.output_dir}/${evaluate_champion.split_name}_confusion_matrix.png:
+          cache: false
+      - ${evaluate_champion.output_dir}/${evaluate_champion.split_name}_error_predictions.csv:
           cache: false
