@@ -5,8 +5,8 @@ stages:
     deps:
     - path: artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
       hash: md5
-      md5: fb62e3218d8bd42ab143df9c1b21699a
-      size: 17145282
+      md5: 5c144c5d9df157dd40f229f70577c877
+      size: 17147925
     - path: data/interim/excluded_duplicates.csv
       hash: md5
       md5: 9202ceedc679d5b412b759221795cd71
@@ -34,14 +34,14 @@ stages:
       size: 9162
   evaluate_champion:
     cmd: uv run python src/evaluate.py --model-path 
-      artifacts/efficientnetb0/efficientnetb0_frozen_best.keras --split-csv 
+      artifacts/training/efficientnetb0-final-test_best.keras --split-csv 
       data/interim/splits/test.csv --split-name test --batch-size 32 
       --output-dir reports/evaluation
     deps:
-    - path: artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
+    - path: artifacts/training/efficientnetb0-final-test_best.keras
       hash: md5
-      md5: fb62e3218d8bd42ab143df9c1b21699a
-      size: 17145282
+      md5: 1bcae2213f7bebefa2ec3a607fc23eff
+      size: 17147925
     - path: data/interim/splits/test.csv
       hash: md5
       md5: da55fce03ace5af27fe40aab5f4cfad6
@@ -63,23 +63,43 @@ stages:
       params.yaml:
         evaluate_champion.batch_size: 32
         evaluate_champion.model_path: 
-          artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
+          artifacts/training/efficientnetb0-final-test_best.keras
         evaluate_champion.output_dir: reports/evaluation
         evaluate_champion.split_csv: data/interim/splits/test.csv
         evaluate_champion.split_name: test
     outs:
+    - path: reports/evaluation/test_classification_report.csv
+      hash: md5
+      md5: c67c872593721561e77db66ce32680c7
+      size: 543
+    - path: reports/evaluation/test_confusion_matrix.csv
+      hash: md5
+      md5: 9ec9d9e1d758e56dad912f720822ee86
+      size: 220
+    - path: reports/evaluation/test_confusion_matrix.png
+      hash: md5
+      md5: 380276c85472f5af2bef0a51815d66c2
+      size: 101463
+    - path: reports/evaluation/test_error_predictions.csv
+      hash: md5
+      md5: cb843be54a03c78d0d028ab08fee4a21
+      size: 3423
     - path: reports/evaluation/test_metrics.json
       hash: md5
-      md5: fdbafff028f7d069d7525277d4dc8705
-      size: 628
+      md5: 712d0ee387c63dca2cd54df0f0bbf21f
+      size: 596
+    - path: reports/evaluation/test_predictions.csv
+      hash: md5
+      md5: 1dbadc1e1f75c4b9ebe126b9271372cb
+      size: 64637
   train_model:
-    cmd: uv run python src/train.py --model-name custom_cnn --learning-rate 
-      0.001 --epochs 1 --batch-size 16 --patience 3 --train-csv 
+    cmd: uv run python src/train.py --model-name efficientnetb0 --learning-rate 
+      0.001 --epochs 10 --batch-size 32 --patience 5 --train-csv 
       data/interim/splits/train.csv --validation-csv 
       data/interim/splits/validation.csv --test-csv data/interim/splits/test.csv
       --output-dir artifacts/training --reports-dir reports/training 
       --tracking-uri sqlite:///mlflow.db --experiment-name surface-scan-training
-      --run-name custom-cnn-smoke-test
+      --run-name efficientnetb0-final-test
     deps:
     - path: data/interim/splits/test.csv
       hash: md5
@@ -112,25 +132,29 @@ stages:
       size: 8420
     params:
       params.yaml:
-        train.batch_size: 16
-        train.epochs: 1
+        train.batch_size: 32
+        train.epochs: 10
         train.experiment_name: surface-scan-training
         train.learning_rate: 0.001
-        train.model_name: custom_cnn
+        train.model_name: efficientnetb0
         train.output_dir: artifacts/training
-        train.patience: 3
+        train.patience: 5
         train.reports_dir: reports/training
-        train.run_name: custom-cnn-smoke-test
+        train.run_name: efficientnetb0-final-test
         train.test_csv: data/interim/splits/test.csv
         train.tracking_uri: sqlite:///mlflow.db
         train.train_csv: data/interim/splits/train.csv
         train.validation_csv: data/interim/splits/validation.csv
     outs:
-    - path: artifacts/training/custom-cnn-smoke-test_best.keras
+    - path: artifacts/training/class_names.json
       hash: md5
-      md5: 30d9277e208354188225039b7f96b5dc
-      size: 1307921
-    - path: reports/training/custom-cnn-smoke-test_history.csv
+      md5: 47b96f272170a15ec42e6f4bf3351278
+      size: 143
+    - path: artifacts/training/efficientnetb0-final-test_best.keras
       hash: md5
-      md5: 0201f8163c13f792ed15d5e8bfcbd04f
-      size: 149
+      md5: 1bcae2213f7bebefa2ec3a607fc23eff
+      size: 17147925
+    - path: reports/training/efficientnetb0-final-test_history.csv
+      hash: md5
+      md5: 572eae85f98a6a8a94c8126ea26b9cf0
+      size: 1054
