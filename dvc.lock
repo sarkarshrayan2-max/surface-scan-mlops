@@ -72,3 +72,65 @@ stages:
       hash: md5
       md5: fdbafff028f7d069d7525277d4dc8705
       size: 628
+  train_model:
+    cmd: uv run python src/train.py --model-name custom_cnn --learning-rate 
+      0.001 --epochs 1 --batch-size 16 --patience 3 --train-csv 
+      data/interim/splits/train.csv --validation-csv 
+      data/interim/splits/validation.csv --test-csv data/interim/splits/test.csv
+      --output-dir artifacts/training --reports-dir reports/training 
+      --tracking-uri sqlite:///mlflow.db --experiment-name surface-scan-training
+      --run-name custom-cnn-smoke-test
+    deps:
+    - path: data/interim/splits/test.csv
+      hash: md5
+      md5: da55fce03ace5af27fe40aab5f4cfad6
+      size: 27551
+    - path: data/interim/splits/train.csv
+      hash: md5
+      md5: efd17b0e2921f1df4606aa0cf555b0d0
+      size: 86903
+    - path: data/interim/splits/validation.csv
+      hash: md5
+      md5: 1d62fe7496ad73d609a6a519ef41b62b
+      size: 15369
+    - path: data/raw/NEU-DET
+      hash: md5
+      md5: 7a6e06218ccbf9bea6f9fc8c387b3927.dir
+      size: 28201919
+      nfiles: 3600
+    - path: src/model_factory.py
+      hash: md5
+      md5: 37d5f1a7e11165700e06a0d338b9d77f
+      size: 5315
+    - path: src/preprocess.py
+      hash: md5
+      md5: 6ab8f533689ee028290003720cb21a26
+      size: 6555
+    - path: src/train.py
+      hash: md5
+      md5: ef616fbbbfae2071d484baff60f4dff0
+      size: 8420
+    params:
+      params.yaml:
+        train.batch_size: 16
+        train.epochs: 1
+        train.experiment_name: surface-scan-training
+        train.learning_rate: 0.001
+        train.model_name: custom_cnn
+        train.output_dir: artifacts/training
+        train.patience: 3
+        train.reports_dir: reports/training
+        train.run_name: custom-cnn-smoke-test
+        train.test_csv: data/interim/splits/test.csv
+        train.tracking_uri: sqlite:///mlflow.db
+        train.train_csv: data/interim/splits/train.csv
+        train.validation_csv: data/interim/splits/validation.csv
+    outs:
+    - path: artifacts/training/custom-cnn-smoke-test_best.keras
+      hash: md5
+      md5: 30d9277e208354188225039b7f96b5dc
+      size: 1307921
+    - path: reports/training/custom-cnn-smoke-test_history.csv
+      hash: md5
+      md5: 0201f8163c13f792ed15d5e8bfcbd04f
+      size: 149
