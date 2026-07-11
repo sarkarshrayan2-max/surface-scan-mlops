@@ -1,4 +1,4 @@
 [core]
-    remote = gdrive_remote
-['remote "gdrive_remote"']
-    url = gdrive://1d_46rSBbnhmvo8TN0A1gLcczv5HqxM0r
+    remote = local_remote
+['remote "local_remote"']
+    url = C:\Users\sarkar\Desktop\surface-scan-mlops-dvc-remote
