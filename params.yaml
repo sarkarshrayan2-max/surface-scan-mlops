@@ -1,20 +1,21 @@
-project:
-  name: surface-scan-mlops
-  random_seed: 42
-
-data:
-  image_size: [224, 224]
-  batch_size: 32
-  num_classes: 6
-
-training:
-  epochs: 25
+train:
+  model_name: custom_cnn
   learning_rate: 0.001
-  dropout: 0.3
-  early_stopping_patience: 5
+  epochs: 1
+  batch_size: 16
+  patience: 3
+  train_csv: data/interim/splits/train.csv
+  validation_csv: data/interim/splits/validation.csv
+  test_csv: data/interim/splits/test.csv
+  output_dir: artifacts/training
+  reports_dir: reports/training
+  tracking_uri: sqlite:///mlflow.db
+  experiment_name: surface-scan-training
+  run_name: custom-cnn-smoke-test
 
-model:
-  baseline: custom_cnn
-  transfer_models:
-    - MobileNetV3Small
-    - EfficientNetB0
+evaluate_champion:
+  model_path: artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
+  split_csv: data/interim/splits/test.csv
+  split_name: test
+  batch_size: 32
+  output_dir: reports/evaluation

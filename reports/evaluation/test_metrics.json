@@ -1,0 +1,16 @@
+{
+  "accuracy": 0.9555555555555556,
+  "macro_precision": 0.9557339101396479,
+  "macro_recall": 0.9555555555555557,
+  "macro_f1": 0.9550412287717428,
+  "weighted_precision": 0.9557339101396478,
+  "weighted_recall": 0.9555555555555556,
+  "weighted_f1": 0.9550412287717427,
+  "total_images": 360,
+  "total_inference_seconds": 26.122914299950935,
+  "average_inference_seconds_per_image": 0.07256365083319705,
+  "average_inference_ms_per_image": 72.56365083319704,
+  "split_name": "test",
+  "model_path": "artifacts\\efficientnetb0\\efficientnetb0_frozen_best.keras",
+  "split_csv": "data\\interim\\splits\\test.csv"
+}

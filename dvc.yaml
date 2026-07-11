@@ -1,0 +1,78 @@
+stages:
+  validate_data:
+    cmd: uv run python src/data_validation.py
+    deps:
+      - src/data_validation.py
+      - data/raw/NEU-DET
+      - data/interim/excluded_duplicates.csv
+      - data/interim/splits/train.csv
+      - data/interim/splits/validation.csv
+      - data/interim/splits/test.csv
+      - artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
+
+  evaluate_champion:
+    cmd: >-
+      uv run python src/evaluate.py
+      --model-path ${evaluate_champion.model_path}
+      --split-csv ${evaluate_champion.split_csv}
+      --split-name ${evaluate_champion.split_name}
+      --batch-size ${evaluate_champion.batch_size}
+      --output-dir ${evaluate_champion.output_dir}
+    deps:
+      - src/evaluate.py
+      - src/preprocess.py
+      - data/raw/NEU-DET
+      - data/interim/splits/test.csv
+      - artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
+    params:
+      - evaluate_champion.model_path
+      - evaluate_champion.split_csv
+      - evaluate_champion.split_name
+      - evaluate_champion.batch_size
+      - evaluate_champion.output_dir
+    metrics:
+      - reports/evaluation/test_metrics.json:
+          cache: false
+
+  train_model:
+    cmd: >-
+      uv run python src/train.py
+      --model-name ${train.model_name}
+      --learning-rate ${train.learning_rate}
+      --epochs ${train.epochs}
+      --batch-size ${train.batch_size}
+      --patience ${train.patience}
+      --train-csv ${train.train_csv}
+      --validation-csv ${train.validation_csv}
+      --test-csv ${train.test_csv}
+      --output-dir ${train.output_dir}
+      --reports-dir ${train.reports_dir}
+      --tracking-uri ${train.tracking_uri}
+      --experiment-name ${train.experiment_name}
+      --run-name ${train.run_name}
+    deps:
+      - src/train.py
+      - src/model_factory.py
+      - src/preprocess.py
+      - data/raw/NEU-DET
+      - data/interim/splits/train.csv
+      - data/interim/splits/validation.csv
+      - data/interim/splits/test.csv
+    params:
+      - train.model_name
+      - train.learning_rate
+      - train.epochs
+      - train.batch_size
+      - train.patience
+      - train.train_csv
+      - train.validation_csv
+      - train.test_csv
+      - train.output_dir
+      - train.reports_dir
+      - train.tracking_uri
+      - train.experiment_name
+      - train.run_name
+    outs:
+      - artifacts/training/${train.run_name}_best.keras
+      - reports/training/${train.run_name}_history.csv:
+          cache: false

@@ -1,0 +1,74 @@
+schema: '2.0'
+stages:
+  validate_data:
+    cmd: uv run python src/data_validation.py
+    deps:
+    - path: artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
+      hash: md5
+      md5: fb62e3218d8bd42ab143df9c1b21699a
+      size: 17145282
+    - path: data/interim/excluded_duplicates.csv
+      hash: md5
+      md5: 9202ceedc679d5b412b759221795cd71
+      size: 180
+    - path: data/interim/splits/test.csv
+      hash: md5
+      md5: da55fce03ace5af27fe40aab5f4cfad6
+      size: 27551
+    - path: data/interim/splits/train.csv
+      hash: md5
+      md5: efd17b0e2921f1df4606aa0cf555b0d0
+      size: 86903
+    - path: data/interim/splits/validation.csv
+      hash: md5
+      md5: 1d62fe7496ad73d609a6a519ef41b62b
+      size: 15369
+    - path: data/raw/NEU-DET
+      hash: md5
+      md5: 7a6e06218ccbf9bea6f9fc8c387b3927.dir
+      size: 28201919
+      nfiles: 3600
+    - path: src/data_validation.py
+      hash: md5
+      md5: 58295f09cebb802e8b9f47fcc5cc1c1b
+      size: 9162
+  evaluate_champion:
+    cmd: uv run python src/evaluate.py --model-path 
+      artifacts/efficientnetb0/efficientnetb0_frozen_best.keras --split-csv 
+      data/interim/splits/test.csv --split-name test --batch-size 32 
+      --output-dir reports/evaluation
+    deps:
+    - path: artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
+      hash: md5
+      md5: fb62e3218d8bd42ab143df9c1b21699a
+      size: 17145282
+    - path: data/interim/splits/test.csv
+      hash: md5
+      md5: da55fce03ace5af27fe40aab5f4cfad6
+      size: 27551
+    - path: data/raw/NEU-DET
+      hash: md5
+      md5: 7a6e06218ccbf9bea6f9fc8c387b3927.dir
+      size: 28201919
+      nfiles: 3600
+    - path: src/evaluate.py
+      hash: md5
+      md5: 4ef9e7235832744451de24c84eb78253
+      size: 12446
+    - path: src/preprocess.py
+      hash: md5
+      md5: 6ab8f533689ee028290003720cb21a26
+      size: 6555
+    params:
+      params.yaml:
+        evaluate_champion.batch_size: 32
+        evaluate_champion.model_path: 
+          artifacts/efficientnetb0/efficientnetb0_frozen_best.keras
+        evaluate_champion.output_dir: reports/evaluation
+        evaluate_champion.split_csv: data/interim/splits/test.csv
+        evaluate_champion.split_name: test
+    outs:
+    - path: reports/evaluation/test_metrics.json
+      hash: md5
+      md5: fdbafff028f7d069d7525277d4dc8705
+      size: 628

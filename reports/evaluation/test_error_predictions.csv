@@ -1,0 +1,17 @@
+image_path,true_label_index,true_label,predicted_label_index,predicted_label,confidence,correct,prob_crazing,prob_inclusion,prob_patches,prob_pitted_surface,prob_rolled-in_scale,prob_scratches
+data\raw\NEU-DET\validation\images\inclusion\inclusion_246.jpg,1,inclusion,5,scratches,0.7713512,False,0.0003200308,0.14019525,0.0011105773,0.08577568,0.0012472505,0.7713512
+data\raw\NEU-DET\validation\images\inclusion\inclusion_252.jpg,1,inclusion,5,scratches,0.73354995,False,0.0009711524,0.12807609,0.001278311,0.13317597,0.002948556,0.73354995
+data\raw\NEU-DET\validation\images\inclusion\inclusion_248.jpg,1,inclusion,5,scratches,0.7041988,False,0.0012660626,0.26014104,0.0148985265,0.01914016,0.0003554699,0.7041988
+data\raw\NEU-DET\validation\images\scratches\scratches_290.jpg,5,scratches,4,rolled-in_scale,0.6497207,False,0.0013210756,0.016371155,0.0015114318,0.003247016,0.6497207,0.3278286
+data\raw\NEU-DET\validation\images\scratches\scratches_283.jpg,5,scratches,1,inclusion,0.5839056,False,0.0017209051,0.5839056,0.0040982137,0.036910884,0.06938634,0.30397812
+data\raw\NEU-DET\validation\images\inclusion\inclusion_254.jpg,1,inclusion,5,scratches,0.5538058,False,0.00084481185,0.26715788,0.0047020745,0.17224172,0.0012477259,0.5538058
+data\raw\NEU-DET\validation\images\inclusion\inclusion_247.jpg,1,inclusion,5,scratches,0.5449478,False,0.00040309376,0.26273057,0.0042410837,0.18703395,0.00064344995,0.5449478
+data\raw\NEU-DET\validation\images\scratches\scratches_266.jpg,5,scratches,4,rolled-in_scale,0.5268292,False,0.0048325565,0.02153839,0.0033785943,0.002514518,0.5268292,0.44090673
+data\raw\NEU-DET\validation\images\inclusion\inclusion_253.jpg,1,inclusion,3,pitted_surface,0.49282163,False,0.0033467007,0.42718902,0.003940498,0.49282163,0.010783581,0.06191851
+data\raw\NEU-DET\validation\images\inclusion\inclusion_242.jpg,1,inclusion,3,pitted_surface,0.49201488,False,0.0020870913,0.48735216,0.002221465,0.49201488,0.011667817,0.004656464
+data\raw\NEU-DET\validation\images\pitted_surface\pitted_surface_273.jpg,3,pitted_surface,4,rolled-in_scale,0.48583958,False,0.02307628,0.028206954,0.121705115,0.33779314,0.48583958,0.0033789217
+data\raw\NEU-DET\validation\images\scratches\scratches_284.jpg,5,scratches,1,inclusion,0.48555756,False,0.0013724781,0.48555756,0.0053303298,0.028442515,0.030720742,0.44857633
+data\raw\NEU-DET\validation\images\inclusion\inclusion_297.jpg,1,inclusion,5,scratches,0.39538118,False,0.0012629104,0.32943785,0.078584686,0.19445553,0.00087780895,0.39538118
+data\raw\NEU-DET\validation\images\scratches\scratches_248.jpg,5,scratches,4,rolled-in_scale,0.38562548,False,0.001133399,0.2516169,0.0014234193,0.005237518,0.38562548,0.35496327
+data\raw\NEU-DET\validation\images\scratches\scratches_246.jpg,5,scratches,1,inclusion,0.38214198,False,0.0016599228,0.38214198,0.0011274898,0.0052941884,0.256977,0.35279945
+data\raw\NEU-DET\validation\images\inclusion\inclusion_249.jpg,1,inclusion,5,scratches,0.368566,False,0.001991969,0.34247395,0.004754507,0.28079715,0.001416381,0.368566
