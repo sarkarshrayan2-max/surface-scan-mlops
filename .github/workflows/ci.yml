@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  code-quality:
+    name: Python syntax and project checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Set up Python
+        run: uv python install 3.11
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Compile Python files
+        run: |
+          uv run python -m py_compile \
+            src/predict.py \
+            src/gradcam.py \
+            src/data_validation.py \
+            src/preprocess.py \
+            src/model_factory.py \
+            src/train.py \
+            src/evaluate.py \
+            app/streamlit_app.py
+
+      - name: Check model factory
+        run: uv run python src/model_factory.py
