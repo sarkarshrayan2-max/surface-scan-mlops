@@ -766,3 +766,6 @@ CI integration
 ```
 
 The final champion model is an EfficientNetB0 transfer-learning model with 95.56% test accuracy and Grad-CAM explanations for model interpretability.
+
+## Author :- 
+Shrayan Sarkar.
